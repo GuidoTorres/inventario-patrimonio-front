@@ -13,6 +13,12 @@
 .form-item{
     width: 33%;
 }
+.form-item-large{
+    width: 50%;
+}
+.form-item-x-large{
+    width: 70%;
+}
 
 
 .form-item-input{

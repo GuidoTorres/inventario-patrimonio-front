@@ -1,0 +1,113 @@
+import React, { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+
+const MenuInventario = ({ setTitle }) => {
+  const navigate = useNavigate();
+  useEffect(() => {
+    setTitle("Menu Procesos");
+  }, []);
+  return (
+    <div
+      style={{
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        height: "100%",
+        gap: "20px",
+      }}
+    >
+      <section
+        style={{ height: "250px", cursor: "pointer", }}
+        onClick={() => navigate("/proceso/inventario/registro")}
+      >
+        <div
+          style={{
+            borderRadius: "50%",
+            boxShadow: "rgba(0, 0, 0, 0.35) 0px 5px 15px",
+            height: "200px",
+            width: "200px",
+            backgroundColor: "white"
+          }}
+        ></div>
+        <p htmlFor="" style={{ marginTop: "10px", fontSize: "15px" }}>
+          <strong>Registro de Bienes</strong>
+        </p>
+      </section>
+
+      <section
+        style={{ height: "250px", cursor: "pointer" }}
+        onClick={() => navigate("/proceso/inventario/consultas")}
+      >
+        <div
+          style={{
+            borderRadius: "50%",
+            boxShadow: "rgba(0, 0, 0, 0.35) 0px 5px 15px",
+            height: "200px",
+            width: "200px",
+            backgroundColor: "white"
+          }}
+        ></div>
+        <p htmlFor="" style={{ marginTop: "10px", fontSize: "15px" }}>
+          {" "}
+          <strong>Consulta de Bienes</strong>
+        </p>
+      </section>
+      <section
+        style={{ height: "250px", cursor: "pointer" }}
+        onClick={() => navigate("/proceso/inventario/cargos")}
+      >
+        <div
+          style={{
+            borderRadius: "50%",
+            boxShadow: "rgba(0, 0, 0, 0.35) 0px 5px 15px",
+            height: "200px",
+            width: "200px",
+            backgroundColor: "white"
+          }}
+        ></div>
+        <p htmlFor="" style={{ marginTop: "10px", fontSize: "15px" }}>
+          {" "}
+          <strong>Tarjetas de Cargo</strong>
+        </p>
+      </section>
+      <section
+        style={{ height: "250px", cursor: "pointer" }}
+        onClick={() => navigate("/proceso/inventario/etiquetas/bienes")}
+      >
+        <div
+          style={{
+            borderRadius: "50%",
+            boxShadow: "rgba(0, 0, 0, 0.35) 0px 5px 15px",
+            height: "200px",
+            width: "200px",
+            backgroundColor: "white"
+          }}
+        ></div>
+        <p htmlFor="" style={{ marginTop: "10px", fontSize: "15px" }}>
+          {" "}
+          <strong>Etiqueta para Bienes</strong>
+        </p>
+      </section>
+      <section
+        style={{ height: "250px", cursor: "pointer" }}
+        onClick={() => navigate("/proceso/inventario/etiquetas")}
+      >
+        <div
+          style={{
+            borderRadius: "50%",
+            boxShadow: "rgba(0, 0, 0, 0.35) 0px 5px 15px",
+            height: "200px",
+            width: "200px",
+            backgroundColor: "white"
+          }}
+        ></div>
+        <p htmlFor="" style={{ marginTop: "10px", fontSize: "15px" }}>
+          {" "}
+          <strong>Etiqueta para Ubicaciones</strong>
+        </p>
+      </section>
+    </div>
+  )
+}
+
+export default MenuInventario

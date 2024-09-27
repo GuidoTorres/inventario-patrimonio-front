@@ -1,9 +1,23 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Flex, Select, Button, Input, Table } from "antd";
 const Consultas = ({ setTitle }) => {
   useEffect(() => {
     setTitle("Consultas");
+    getBienes()
   }, []);
+
+  const [bienes, setBienes] = useState()
+
+  const getBienes = async () => {
+    const response = await fetch(
+      `http://localhost:3006/api/v1/bienes/inventariados`
+    );
+
+    if (response.ok) {
+      const info = await response.json();
+      setBienes(info.bien); // Guardar los bienes en el estado si la respuesta es exitosa
+    }
+  };
 
   const columns = [
     {
@@ -143,7 +157,7 @@ const Consultas = ({ setTitle }) => {
             align="center"
             justify="end"
           >
-            <Button style={{backgroundColor:"#4DA362", color:"white"}}> Realizar Busqueda</Button>
+            <Button style={{ backgroundColor: "#4DA362", color: "white" }}> Realizar Busqueda</Button>
           </Flex>
         </Flex>
       </div>
@@ -155,7 +169,7 @@ const Consultas = ({ setTitle }) => {
           padding: "15px",
         }}
       >
-        <Table columns={columns} />
+        <Table columns={columns} dataSource={bienes} />
       </section>
     </>
   );

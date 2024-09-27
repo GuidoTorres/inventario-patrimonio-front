@@ -18,7 +18,7 @@ const MenuProceso = ({ setTitle }) => {
     >
       <section
         style={{ height: "250px", cursor: "pointer",}}
-        onClick={() => navigate("/proceso/inventario")}
+        onClick={() => navigate("/proceso/inventario/menu")}
       >
         <div
           style={{

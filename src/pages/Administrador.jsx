@@ -15,6 +15,10 @@ import Inventario from "../components/proceso/Inventario";
 import Consultas from "../components/proceso/Consultas";
 import Reportes from "../components/proceso/Reportes";
 import ConsultaSiga from "../components/consultas/ConsultaSiga";
+import MenuInventario from "../components/proceso/MenuInventario";
+import EtiquetasUbicaciones from "../components/proceso/EtiquetasUbicaciones";
+import EtiquetasBienes from "../components/proceso/EtiquetasBienes";
+import TarjetasCargo from "../components/proceso/TarjetasCargo";
 
 const { Sider, Header, Content } = Layout;
 
@@ -65,7 +69,48 @@ const Administrador = () => {
               />
 
               <Route
-                path="/proceso/inventario"
+                path="/proceso/inventario/menu"
+                element={
+                  <ProtectedRoute>
+                    <MenuInventario setTitle={setTitle} />
+                  </ProtectedRoute>
+                }
+              />
+
+              <Route
+                path="/proceso/inventario/registro"
+                element={
+                  <ProtectedRoute>
+                    <Inventario setTitle={setTitle} />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/proceso/inventario/consultas"
+                element={
+                  <ProtectedRoute>
+                    <Consultas setTitle={setTitle} />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/proceso/inventario/cargo"
+                element={
+                  <ProtectedRoute>
+                    <Inventario setTitle={setTitle} />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/proceso/inventario/bienes"
+                element={
+                  <ProtectedRoute>
+                    <Inventario setTitle={setTitle} />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/proceso/inventario/ubicaciones"
                 element={
                   <ProtectedRoute>
                     <Inventario setTitle={setTitle} />
@@ -73,6 +118,30 @@ const Administrador = () => {
                 }
               />
 
+              <Route
+                path="/proceso/inventario/etiquetas"
+                element={
+                  <ProtectedRoute>
+                    <EtiquetasUbicaciones setTitle={setTitle} />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/proceso/inventario/etiquetas/bienes"
+                element={
+                  <ProtectedRoute>
+                    <EtiquetasBienes setTitle={setTitle} />
+                  </ProtectedRoute>
+                }
+              />
+                            <Route
+                path="/proceso/inventario/cargos"
+                element={
+                  <ProtectedRoute>
+                    <TarjetasCargo setTitle={setTitle} />
+                  </ProtectedRoute>
+                }
+              />
               <Route
                 path="/proceso/consultas"
                 element={
