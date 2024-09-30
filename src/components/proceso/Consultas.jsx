@@ -3,10 +3,15 @@ import { Flex, Select, Button, Input, Table } from "antd";
 const Consultas = ({ setTitle }) => {
   useEffect(() => {
     setTitle("Consultas");
-    getBienes()
+    getBienes();
+    getSedes();
+    getUbicaciones();
   }, []);
 
-  const [bienes, setBienes] = useState()
+  const [bienes, setBienes] = useState([]);
+  const [sedes, setSedes] = useState([]);
+  const [ubicaciones, setUbicaciones] = useState([]);
+  const [filters, setFilters] = useState([]);
 
   const getBienes = async () => {
     const response = await fetch(
@@ -19,6 +24,23 @@ const Consultas = ({ setTitle }) => {
     }
   };
 
+  const getSedes = async () => {
+    const response = await fetch(`http://localhost:3006/api/v1/sedes`);
+
+    if (response.ok) {
+      const info = await response.json();
+      setSedes(info); // Guardar los bienes en el estado si la respuesta es exitosa
+    }
+  };
+  const getUbicaciones = async () => {
+    const response = await fetch(`http://localhost:3006/api/v1/ubicaciones`);
+
+    if (response.ok) {
+      const info = await response.json();
+      setUbicaciones(info); // Guardar los bienes en el estado si la respuesta es exitosa
+    }
+  };
+
   const columns = [
     {
       title: "COD. SBN",
@@ -26,8 +48,8 @@ const Consultas = ({ setTitle }) => {
       align: "center",
     },
     {
-      title: "DENOMINACIÓN",
-      dataIndex: "denominacion",
+      title: "DETALLES",
+      dataIndex: "detalles",
       align: "center",
     },
     {
@@ -56,6 +78,40 @@ const Consultas = ({ setTitle }) => {
       align: "center",
     },
   ];
+  const handleInputChange = (name, value) => {
+    setFilters({
+      ...filters,
+      [name]: value,
+    });
+  };
+
+  // Construir la URL con los filtros dinámicos
+  const buildQueryParams = () => {
+    const query = new URLSearchParams();
+
+    Object.keys(filters).forEach((key) => {
+      if (filters[key]) {
+        query.append(key, filters[key]);
+      }
+    });
+
+    return query.toString();
+  };
+
+  // Enviar la consulta a la API
+  const handleSearch = async () => {
+    const queryParams = buildQueryParams();
+    const url = `http://localhost:3006/api/v1/bienes/consulta?${queryParams}`;
+
+    try {
+      const response = await fetch(url);
+      const data = await response.json();
+      setBienes(data.data);
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+  };
+
   return (
     <>
       <div style={{ backgroundColor: "white", borderRadius: "10px" }}>
@@ -73,56 +129,45 @@ const Consultas = ({ setTitle }) => {
             style={{
               width: "33%",
             }}
-            options={[
-              {
-                value: "jack",
-                label: "Jack",
-              },
-              {
-                value: "lucy",
-                label: "Lucy",
-              },
-              {
-                value: "Yiminghe",
-                label: "yiminghe",
-              },
-              {
-                value: "disabled",
-                label: "Disabled",
-                disabled: true,
-              },
-            ]}
+            name="sede_id"
+            value={filters.sede_id}
+            onChange={(e) => handleInputChange("sede_id", e)}
+            options={sedes.map((item) => {
+              return {
+                label: item.nombre,
+                value: item.id,
+              };
+            })}
           />
           <Select
             placeholder="Ubicaciones"
             style={{
               width: "33%",
             }}
-            options={[
-              {
-                value: "jack",
-                label: "Jack",
-              },
-              {
-                value: "lucy",
-                label: "Lucy",
-              },
-              {
-                value: "Yiminghe",
-                label: "yiminghe",
-              },
-              {
-                value: "disabled",
-                label: "Disabled",
-                disabled: true,
-              },
-            ]}
+            options={ubicaciones.map((item) => {
+              return {
+                label: item.nombre,
+                value: item.id,
+              };
+            })}
+            name="ubicacion_id"
+            value={filters.ubicacion_id}
+            onChange={(e) => handleInputChange("ubicacion_id", e)}
           />
-          <Input
+          <Select
             placeholder="Usuarios"
             style={{
               width: "33%",
             }}
+            options={ubicaciones.map((item) => {
+              return {
+                label: item.nombre,
+                value: item.id,
+              };
+            })}
+            name="dni"
+            value={filters.dni}
+            onChange={(e) => handleInputChange("dni", e)}
           />
         </Flex>
         <Flex justify="start" align="center">
@@ -141,12 +186,18 @@ const Consultas = ({ setTitle }) => {
               style={{
                 width: "50%",
               }}
+              name="sbn"
+              value={filters.sbn}
+              onChange={(e) => handleInputChange("sbn", e.target.value)}
             />
             <Input
               placeholder="Serie"
               style={{
                 width: "50%",
               }}
+              name="serie"
+              value={filters.serie}
+              onChange={(e) => handleInputChange("serie", e.target.value)}
             />
           </Flex>
           <Flex
@@ -157,7 +208,13 @@ const Consultas = ({ setTitle }) => {
             align="center"
             justify="end"
           >
-            <Button style={{ backgroundColor: "#4DA362", color: "white" }}> Realizar Busqueda</Button>
+            <Button
+              style={{ backgroundColor: "#4DA362", color: "white" }}
+              onClick={handleSearch}
+            >
+              {" "}
+              Realizar Busqueda
+            </Button>
           </Flex>
         </Flex>
       </div>
@@ -169,7 +226,11 @@ const Consultas = ({ setTitle }) => {
           padding: "15px",
         }}
       >
-        <Table columns={columns} dataSource={bienes} />
+        <Table
+          columns={columns}
+          dataSource={bienes}
+          className="custom-header-table"
+        />
       </section>
     </>
   );
