@@ -1,4 +1,4 @@
-import { Flex, Select, Button, Input, Table, Descriptions } from "antd";
+import { Flex, Select, Button, Input, Table, Descriptions, Tag } from "antd";
 import React, { useEffect, useState } from "react";
 
 const ConsultaSiga = ({ setTitle }) => {
@@ -25,7 +25,7 @@ const ConsultaSiga = ({ setTitle }) => {
     },
     {
       title: "DETALLES",
-      dataIndex: "denominacion",
+      dataIndex: "DESCRIPCION",
       align: "center",
     },
     {
@@ -45,12 +45,14 @@ const ConsultaSiga = ({ setTitle }) => {
     },
     {
       title: "SERIE",
-      dataIndex: "SERIE",
+      render: (_, record)=> <>
+      <p>{record.NRO_SERIE ? record.NRO_SERIE : "Sin Serie"}</p>
+      </>,
       align: "center",
     },
     {
       title: "SITUACIÓN",
-      dataIndex: "SITUACIÓN",
+      render: (_, record)=> <Tag color="volcano">{record?.ESTADO}</Tag>,
       align: "center",
     },
   ];
@@ -82,7 +84,7 @@ const ConsultaSiga = ({ setTitle }) => {
     if (serie) queryParams.append("serie", serie);
 
     const response = await fetch(
-      `http://localhost:3001/api/v1/bienes?${queryParams.toString()}`
+      `http://10.30.1.42:8084/api/v1/bienes?${queryParams.toString()}`
     );
     if (response.ok) {
       const data = await response.json();
@@ -102,28 +104,33 @@ const ConsultaSiga = ({ setTitle }) => {
     const items = [
       {
         key: '1',
-        label: 'UserName',
-        children: 'Zhou Maomao',
+        label: 'Detalles',
+        children: record.CARACTERISTICAS,
       },
       {
         key: '2',
-        label: 'Telephone',
-        children: '1810000000',
+        label: 'Observaciones',
+        children: record?.observaciones,
       },
       {
         key: '3',
-        label: 'Live',
-        children: 'Hangzhou, Zhejiang',
+        label: 'Cod. Ubicación',
+        children: record?.TIPO_UBICAC +""+ record?.COD_UBICAC,
       },
       {
         key: '4',
-        label: 'Remark',
-        children: 'empty',
+        label: 'Sede',
+        children: record?.nombre_sede,
       },
       {
         key: '5',
-        label: 'Address',
-        children: 'No. 18, Wantang Road, Xihu District, Hangzhou, Zhejiang, China',
+        label: 'DNI',
+        children: record?.docum_ident,
+      },
+      {
+        key: '5',
+        label: 'Responsable',
+        children:record?.nombre_completo,
       },
     ];
 

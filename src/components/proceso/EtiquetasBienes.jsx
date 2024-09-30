@@ -1,7 +1,8 @@
-import { Flex, Input, Select, Typography } from "antd";
+import { Button, Flex, Input, Select, Typography } from "antd";
 import Item from "antd/es/list/Item";
 import React, { useEffect, useRef, useState } from "react";
 import CodigoBarras from "./Etiquetas/CodigoBarras";
+import { useReactToPrint } from "react-to-print";
 
 const EtiquetasBienes = ({ setTitle }) => {
   const barcodeRef = useRef();
@@ -9,6 +10,7 @@ const EtiquetasBienes = ({ setTitle }) => {
   useEffect(() => {
     setTitle("Etiquetas para bienes");
   }, []);
+  const [printTrigger, setPrintTrigger] = useState(false);
   const [ubicaciones, setUbicaciones] = useState([]);
   const [formValues, setFormValues] = useState();
   const [trabajadores, setTrabajadores] = useState([]);
@@ -64,11 +66,46 @@ const EtiquetasBienes = ({ setTitle }) => {
   useEffect(() => {
     getTrabajador();
   }, [cod]);
-  console.log("====================================");
-  console.log(cod);
-  console.log("====================================");
+  const handlePrint = useReactToPrint({
+    content: () => barcodeRef.current,
+  });
+
+  const handleBarcodePrint = () => {
+    setPrintTrigger(true);
+  };
+
+  useEffect(() => {
+    if (printTrigger) {
+      handlePrint();
+      setPrintTrigger(false);
+    }
+  }, [printTrigger]);
+
   return (
     <>
+      <style>
+        {`
+      @media print {
+        @page {
+          size: 5cm 2.4cm; /* Tamaño de la etiqueta */
+          margin: 0; /* Sin márgenes en la página */
+        }
+
+        div {
+          page-break-inside: avoid; /* Evitar que una etiqueta se corte entre páginas */
+          break-inside: avoid-column;
+        }
+
+        /* Asegurarse de que las etiquetas ocupen el tamaño adecuado */
+        .etiqueta {
+          width: 5cm;
+          height: 2.5cm;
+          padding: 5px;
+          box-sizing: border-box; /* Asegura que padding esté incluido en el tamaño total */
+        }
+      }
+    `}
+      </style>
       <Typography.Text>Busqueda de </Typography.Text>
       <Flex
         justify="start"
@@ -89,16 +126,22 @@ const EtiquetasBienes = ({ setTitle }) => {
           options={
             trabajadores.length > 0
               ? trabajadores.map((item) => {
-                  return { label: item.nombre, value: item.dni };
-                })
+                return { label: item.nombre, value: item.dni };
+              })
               : []
           }
         />
       </Flex>
 
       <div ref={barcodeRef}>
-        <CodigoBarras values={etiquetas} />
+        <CodigoBarras values={etiquetas}  className="etiqueta"/>
       </div>
+
+      <Flex justify='end' align='center' style={{ marginTop: "40px", paddingRight: "150px" }}>
+
+        <Button type='primary' onClick={() => handleBarcodePrint()}>Imprimir Etiqueta</Button>
+      </Flex>
+
     </>
   );
 };

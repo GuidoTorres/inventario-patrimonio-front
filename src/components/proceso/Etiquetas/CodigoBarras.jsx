@@ -2,19 +2,26 @@ import React from "react";
 import Barcode from "react-barcode";
 import image from "../../../assets/logo_autodema.png";
 import image1 from "../../../assets/gobierno.png";
+import { Flex } from "antd";
 const CodigoBarras = ({ values }) => {
+
+  console.log(values);
+
   return (
     <>
       {values?.map((value, index) => (
+
+
         <div
           key={index}
+          className="etiqueta" // Agrega la clase para aplicar el tamaño fijo
           style={{
-            width: "5cm",
-            height: "2.5cm",
+            width: "5.5cm",
+            height: "2.4cm",
             textAlign: "center",
-            marginBottom: "2mm",
-            boxSizing: "border-box",
-            padding: "0.2mm",
+            margin: "0",
+            padding: "10px",
+            backgroundColor: "white",
           }}
         >
           <div
@@ -34,7 +41,7 @@ const CodigoBarras = ({ values }) => {
             </div>
             <div
               style={{
-                fontSize:  "8px",
+                fontSize: "8px",
                 fontFamily: "Helvetica",
                 lineHeight: "1",
                 flex: 8,
@@ -49,7 +56,7 @@ const CodigoBarras = ({ values }) => {
                   textRendering: "optimizeLegibility",
                 }}
               >
-                "PEIMS - AUTODEMA - PATRIMONIO"
+                "PEIMS - AUTODEMA - INV 2024"
               </p>
               <div
                 style={{
@@ -68,46 +75,44 @@ const CodigoBarras = ({ values }) => {
               />
             </div>
           </div>
-          <div
-            style={{
-              display: "flex",
-              justifyContent: "space-between",
-              alignItems: "center",
-            }}
-          >
+
+          <Flex justify="space-between" align="center">
+
             <div
               style={{
                 transform: "rotate(-90deg)",
                 fontSize: "6px",
-                marginLeft: "-5px",
-                paddingLeft: "0",
+                marginLeft: "-2px",
+                paddingLeft: "5px",
               }}
             >
-              <label>{`O/C` + " " + value?.nro_orden}</label>
+              <strong><label>{value?.ubicacione?.tipo_ubicac + " - " + value?.ubicacione?.ubicac_fisica}</label></strong>
             </div>
 
+
+
             <Barcode
-              value={111}
-              width={1.25}
+              value={value.sbn}
+              width={1.28}
               height={20}
               fontSize={12}
               marginTop={5}
               marginBottom={5}
-              marginLeft={-0.5}
             />
+
             <div>
               <p
                 style={{
-                  transform: "rotate(90deg)",
+                  transform: "rotate(-90deg)",
                   fontSize: "7px",
-                  marginRight: "-2px",
+                  paddingRight:"5px"
                 }}
               >
-                {new Date().getFullYear()}
+                <strong>{new Date().getFullYear()}</strong>
               </p>
             </div>
-          </div>
-          {/* <p
+          </Flex>
+          <p
             style={{
               overflow: "hidden",
               fontFamily: "Helvetica",
@@ -118,8 +123,9 @@ const CodigoBarras = ({ values }) => {
             }}
           >
             {value?.descripcion}
-          </p> */}
+          </p>
         </div>
+
       ))}
     </>
   );
