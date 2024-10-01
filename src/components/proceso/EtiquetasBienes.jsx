@@ -17,6 +17,7 @@ const EtiquetasBienes = ({ setTitle }) => {
   const [etiquetas, setEtiquetas] = useState([]);
   const [cod, setCod] = useState("");
   const [dni, setDni] = useState("");
+  const [sbn, setSbn] = useState("");
 
   useEffect(() => {
     getUbicaciones();
@@ -45,9 +46,23 @@ const EtiquetasBienes = ({ setTitle }) => {
   };
 
   const getEtiquetas = async () => {
-    const response = await fetch(
-      `http://localhost:3006/api/v1/bienes/etiquetas?cod=${cod}&dni=${dni}`
-    );
+    let url = `http://localhost:3006/api/v1/bienes/etiquetas?`; // URL base
+
+    // Agregar parámetros opcionales a la URL
+    if (cod) {
+      url += `cod=${cod}&`;
+    }
+    if (dni) {
+      url += `dni=${dni}&`;
+    }
+    if (sbn) {
+      url += `sbn=${sbn}&`;
+    }
+
+    // Eliminar el último `&` si existe
+    url = url.slice(0, -1);
+
+    const response = await fetch(url);
 
     if (response.ok) {
       const info = await response.json();
@@ -57,11 +72,10 @@ const EtiquetasBienes = ({ setTitle }) => {
     }
   };
 
+
   useEffect(() => {
-    if (cod !== "") {
-      getEtiquetas();
-    }
-  }, [dni]);
+    getEtiquetas();
+  }, [dni, sbn]);
 
   useEffect(() => {
     getTrabajador();
@@ -106,7 +120,6 @@ const EtiquetasBienes = ({ setTitle }) => {
       }
     `}
       </style>
-      <Typography.Text>Busqueda de </Typography.Text>
       <Flex
         justify="start"
         gap={"10px"}
@@ -114,6 +127,7 @@ const EtiquetasBienes = ({ setTitle }) => {
           backgroundColor: "white",
           padding: "15px",
           borderRadius: "8px",
+          border: "1px solid lightgrey"
         }}
       >
         <Input
@@ -121,6 +135,7 @@ const EtiquetasBienes = ({ setTitle }) => {
           onChange={(e) => setCod(e.target.value)}
         />
         <Select
+          placeholder="Trabajador"
           className="form-item-input"
           onChange={(e) => setDni(e)}
           options={
@@ -130,17 +145,36 @@ const EtiquetasBienes = ({ setTitle }) => {
               })
               : []
           }
-        />
-      </Flex>
 
-      <div ref={barcodeRef}>
-        <CodigoBarras values={etiquetas}  className="etiqueta"/>
+        />
+
+        <Input
+          placeholder="SBN"
+          onChange={(e) => setSbn(e.target.value)}
+
+        />
+        <Button style={{ backgroundColor: "#4DA362", color: "white" }} onClick={() => handleBarcodePrint()}>Limpiar Filtros</Button>
+        {etiquetas.length > 0 ?
+
+
+          <Flex justify='end' align='center'>
+
+            <Button style={{ backgroundColor: "#4DA362", color: "white" }} onClick={() => handleBarcodePrint()}>Imprimir Etiquetas</Button>
+          </Flex>
+          : null
+        }
+      </Flex>
+      <div style={{
+        height: "90%", border: "1px solid lightgrey"
+        , marginTop: "10px", borderRadius: "8px", padding: "1px", backgroundColor: "white"
+      }}>
+
+        <div ref={barcodeRef}>
+          <CodigoBarras values={etiquetas} className="etiqueta" />
+        </div>
+
       </div>
 
-      <Flex justify='end' align='center' style={{ marginTop: "40px", paddingRight: "150px" }}>
-
-        <Button type='primary' onClick={() => handleBarcodePrint()}>Imprimir Etiqueta</Button>
-      </Flex>
 
     </>
   );

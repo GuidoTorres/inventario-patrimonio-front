@@ -145,15 +145,16 @@ const EtiquetasUbicaciones = () => {
             <Flex justify='center' align='center' style={{ marginTop: "100px" }}>
                 <div
                     key={1}
-                    ref={barcodeRef} style={{
-                        width: "5.5cm",
+                    ref={barcodeRef}
+                    style={{
+                        width: "5cm",
                         height: "2.4cm",
                         textAlign: "center",
-                        paddingTop: "5px",
-                        paddingLeft: "5px",
-                        paddingRight: "8px",
-                        paddingBottom: "8px"
-                        //                       padding: "0.4mm", display: !printTrigger ? "none" : "block"
+                        padding: "2px",  // Asegúrate de que el padding sea pequeño
+                        margin: "0 auto",  // Centrar el contenido si es necesario
+                        boxSizing: "border-box",
+                        display: printTrigger ? 'block' : "none",
+                        width: "94%"
                     }}
                 >
                     <div
@@ -161,23 +162,25 @@ const EtiquetasUbicaciones = () => {
                             display: "flex",
                             justifyContent: "center",
                             alignItems: "center",
-                            gap: "2px",
-                            padding: "2px"
+                            gap: "4px",
+                            padding: "0px",  // Elimina el padding adicional
+                            width: "100%",
+                            paddingTop: "2px"
                         }}
                     >
-                        <div style={{ flex: 1 }}>
+                        <div style={{ width: "10%", padding: 0, margin: 0 }}>
                             <img
                                 src={image1}
                                 alt="Custom Logo"
-                                style={{ height: "15px", imageRendering: "crisp-edges" }}
+                                style={{ height: "15px", imageRendering: "crisp-edges" }}  // Reduce el tamaño de la imagen
                             />
                         </div>
                         <div
                             style={{
-                                fontSize: "7px",
+                                fontSize: "5px",  // Reduce el tamaño de la fuente
                                 fontFamily: "Helvetica",
                                 lineHeight: "1",
-                                flex: 8,
+                                width: "80%",
                                 textAlign: "center",
                             }}
                         >
@@ -185,21 +188,20 @@ const EtiquetasUbicaciones = () => {
                                 style={{
                                     margin: 0,
                                     width: "100%",
-                                    letterSpacing: "0.4px",
+                                    letterSpacing: "0.2px",
                                     textRendering: "optimizeLegibility",
                                 }}
                             >
-                                PROYECTO ESPECIAL INTEGRAL MAJES SIGUAS
-                                OFICINA DE CONTROL Y SANEAMIENTO
+                                PROYECTO ESPECIAL INTEGRAL MAJES SIGUAS <br />
+                                OFICINA DE CONTROL Y SANEAMIENTO <br />
                                 PATRIMONIAL
                             </p>
-
                         </div>
-                        <div style={{ flex: 1 }}>
+                        <div style={{ width: "10%" }}>
                             <img
                                 src={image}
                                 alt="Custom Logo"
-                                style={{ height: "15px", imageRendering: "crisp-edges" }}
+                                style={{ height: "15px", imageRendering: "crisp-edges" }}  // Reduce el tamaño de la imagen
                             />
                         </div>
                     </div>
@@ -208,92 +210,101 @@ const EtiquetasUbicaciones = () => {
                         <div
                             style={{
                                 borderBottom: "0.2px solid black",
-                                marginTop: "2px",
-                                borderTop: 0,
-                                width: "95%"
+                                width: "95%",
                             }}
                         ></div>
                     </Flex>
+
                     <div
                         style={{
                             display: "flex",
                             justifyContent: "center",
                             alignItems: "center",
-                            marginTop: "5px"
+                            marginTop: "2px",
+                            height: "70%"
                         }}
                     >
-
                         <QRCode
-                            style={{ width: "30px", height: "30px" }}
+                            style={{ width: "70px", height: "50px", flex: 1, marginTop: "4px" }}  // Reduce el tamaño del código QR
                             viewBox={`0 0 256 256`}
-                            value={"prueba"}
+                            value={dataValues?.sede + " " + dataValues?.dependencia + " " + dataValues?.ubicaciones}
                         />
+                        <div style={{ flex: 2, alignItems: "flex-start", height: "60px", gap: "10px" }}>
+                            <div
+                                style={{
+                                    display: "flex",
+                                    justifyContent: "flex-start",
+                                    marginTop: "2px",  // Reduce el margen superior
+
+                                }}
+                            >
+
+                                <div style={{ flex: 1 }}>
+                                    <p
+                                        style={{
+                                            overflow: "hidden",
+                                            fontFamily: "Helvetica",
+                                            fontSize: "10px",  // Reduce el tamaño de la fecha
+                                            marginTop: "2px",
+                                            textRendering: "optimizeLegibility",
+                                            textAlign: "right",
+                                            paddingRight: "2px",
+                                        }}
+                                    >
+                                        {new Date().getFullYear()}
+                                    </p>
+                                </div>
+                            </div>
+                            <div style={{ display: "flex", flexDirection: "column", gap: "2px", marginTop: "10px" }}>
+                                <p
+                                    style={{
+                                        overflow: "hidden",
+                                        fontFamily: "Helvetica",
+                                        fontSize: "6px",  // Reduce el tamaño de la fuente
+                                        margin: 0,
+                                        textRendering: "optimizeLegibility",
+                                        textAlign: "left",
+                                    }}
+                                >
+                                    <strong style={{ width: "80px" }}>SEDE:</strong> {dataValues?.sede}
+                                </p>
+                                <p
+                                    style={{
+                                        overflow: "hidden",
+                                        fontFamily: "Helvetica",
+                                        fontSize: "6px",  // Reduce el tamaño de la fuente
+                                        margin: 0,
+                                        textRendering: "optimizeLegibility",
+                                        textAlign: "left",
+                                    }}
+                                >
+                                    <strong style={{ width: "80px" }}>ÁREA:</strong> {dataValues?.dependencia}
+                                </p>
+                                <p
+                                    style={{
+                                        overflow: "hidden",
+                                        fontFamily: "Helvetica",
+                                        fontSize: "6px",  // Reduce el tamaño de la fuente
+                                        margin: 0,
+                                        textRendering: "optimizeLegibility",
+                                        textAlign: "left",
+                                    }}
+                                >
+                                    <strong>UBICACIÓN:</strong> {dataValues?.ubicaciones}
+                                </p>
+
+                            </div>
+
+                        </div>
 
                     </div>
-                    <div style={{ display: "flex", justifyContent: "flex-start", marginTop: "4px", paddingLeft: "4px" }}>
-                        <div style={{ flex: 3 }}>
-
-                            <p
-                                style={{
-                                    overflow: "hidden",
-                                    fontFamily: "Helvetica",
-                                    fontSize: "7px",
-                                    margin: 0,
-                                    textRendering: "optimizeLegibility",
-                                    textAlign: "left"
-                                }}
-                            >
-                                <strong style={{ width: "100px" }}>SEDE:</strong>   {dataValues && dataValues.sede && dataValues?.sede}
-
-                            </p>
-                            <p
-                                style={{
-                                    overflow: "hidden",
-                                    fontFamily: "Helvetica",
-                                    fontSize: "7px",
-                                    margin: 0,
-                                    textRendering: "optimizeLegibility",
-                                    textAlign: "left"
-                                }}
-                            >
-                                <strong style={{ width: "100px" }}>ÁREA:</strong>   {dataValues && dataValues.dependencia && dataValues?.dependencia}
 
 
-                            </p>
-                            <p
-                                style={{
-                                    overflow: "hidden",
-                                    fontFamily: "Helvetica",
-                                    fontSize: "7px",
-                                    margin: 0,
-                                    textRendering: "optimizeLegibility",
-                                    textAlign: "left"
-                                }}
-                            >
-                                <strong >UBICACIÓN:</strong>  {dataValues && dataValues.ubicaciones && dataValues?.ubicaciones}
 
-                            </p>
-                        </div>
-                        <div style={{ flex: 1 }}>
-                            <p
-                                style={{
-                                    overflow: "hidden",
-                                    fontFamily: "Helvetica",
-                                    fontSize: "15px",
-                                    marginTop: "4px",
-                                    textRendering: "optimizeLegibility",
-                                    textAlign: "right",
-                                    paddingRight: "4px"
-                                }}
-                            >
-                                {new Date().getFullYear()}
-
-                            </p>
-                        </div>
-                    </div>
                 </div>
-
             </Flex>
+
+
             <Flex justify='center' align='center'
             >
                 <div
@@ -473,7 +484,7 @@ const EtiquetasUbicaciones = () => {
             </Flex>
 
             {
-                dataValues.sede !== "" && dataValues.dependencia !== "" && dataValues.ubicaciones !== "" ?
+                formValues.sede !== "" && formValues.dependencia !== "" && formValues.ubicaciones !== "" ?
                     <Flex justify='end' align='center' style={{ marginTop: "40px", paddingRight: "150px" }}>
 
                         <Button type='primary' onClick={() => handleBarcodePrint()}>Imprimir Etiqueta</Button> </Flex> : ""
