@@ -78,7 +78,7 @@ const TarjetasCargo = ({ setTitle }) => {
     }, [cod]);
     const handlePrint = async () => {
         // Generar el PDF como un blob usando el componente CargoPDF
-        const blob = await pdf(<CargoPDF />).toBlob();
+        const blob = await pdf(<CargoPDF registros={etiquetas}/>).toBlob();
     
         // Crear una URL temporal para el blob
         const url = URL.createObjectURL(blob);
@@ -115,7 +115,7 @@ const TarjetasCargo = ({ setTitle }) => {
 
                     <Flex justify='end' align='center'>
 
-                        <Button style={{ backgroundColor: "#4DA362", color: "white" }} onClick={ handlePrint}>Imprimir Etiquetas</Button>
+                        <Button style={{ backgroundColor: "#4DA362", color: "white" }} onClick={ handlePrint}>Imprimir</Button>
                     </Flex>
                     : null
                 }
