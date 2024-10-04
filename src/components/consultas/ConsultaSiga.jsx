@@ -10,7 +10,7 @@ const ConsultaSiga = ({ setTitle }) => {
   const [codigoSBN, setCodigoSBN] = useState("");
   const [serie, setSerie] = useState("");
   const [bienes, setBienes] = useState([]);
-  
+
   useEffect(() => {
     setTitle("Consulta Siga");
     getSedes();
@@ -19,12 +19,12 @@ const ConsultaSiga = ({ setTitle }) => {
 
   const columns = [
     {
-      title: "COD. SBN",
+      title: "SBN",
       dataIndex: "CODIGO_ACTIVO",
       align: "center",
     },
     {
-      title: "DETALLES",
+      title: "DENOMINACIÓN",
       dataIndex: "DESCRIPCION",
       align: "center",
     },
@@ -34,7 +34,7 @@ const ConsultaSiga = ({ setTitle }) => {
       align: "center",
     },
     {
-      title: "MODELO",
+      title: "MDOELO",
       dataIndex: "MODELO",
       align: "center",
     },
@@ -45,16 +45,36 @@ const ConsultaSiga = ({ setTitle }) => {
     },
     {
       title: "SERIE",
-      render: (_, record)=> <>
-      <p>{record.NRO_SERIE ? record.NRO_SERIE : "Sin Serie"}</p>
+      render: (_, record) => <>
+        <p>{record.NRO_SERIE ? record.NRO_SERIE : "Sin Serie"}</p>
       </>,
       align: "center",
     },
     {
-      title: "SITUACIÓN",
-      render: (_, record)=> <Tag color="volcano">{record?.ESTADO}</Tag>,
+      title: "ESTADO",
+      render: (_, record) => (
+        <>
+          {record.ESTADO_CONSERV === "1" || record.ESTADO_CONSERV === "1" ? (
+            <Tag color="green">Bueno</Tag>
+          ) : record.ESTADO_CONSERV === "2" || record.ESTADO_CONSERV === "2" ? (
+            <Tag color="blue">Regular</Tag>
+          ) : record.ESTADO_CONSERV === "3" || record.ESTADO_CONSERV === "3" ? (
+            <Tag color="volcano">Malo</Tag>
+          ) : record.ESTADO_CONSERV === "4" || record.ESTADO_CONSERV === "4" ? (
+            <Tag color="red">Muy Malo</Tag>
+          ) : record.ESTADO_CONSERV === "5" || record.ESTADO_CONSERV === "5" ? (
+            <Tag color="blue">Nuevo</Tag>
+          ) : record.ESTADO_CONSERV === "6" || record.ESTADO_CONSERV === "6" ? (
+            <Tag color="purple">Chatarra</Tag>
+          ) : record.ESTADO_CONSERV === "7" || record.ESTADO_CONSERV === "7" ? (
+            <Tag color="magenta">RAEE</Tag>
+          ) : null}
+        </>
+      ),
       align: "center",
     },
+
+    
   ];
 
   const getSedes = async () => {
@@ -105,17 +125,17 @@ const ConsultaSiga = ({ setTitle }) => {
       {
         key: '1',
         label: 'Detalles',
-        children: record.CARACTERISTICAS,
+        children: record.CARACTERISTICAS ? record.CARACTERISTICAS : "SIN DETALLES",
       },
       {
         key: '2',
         label: 'Observaciones',
-        children: record?.observaciones,
+        children: record.observaciones ? record.observaciones : "SIN OBSERVACIONES",
       },
       {
         key: '3',
         label: 'Cod. Ubicación',
-        children: record?.TIPO_UBICAC +""+ record?.COD_UBICAC,
+        children: record?.TIPO_UBICAC + "" + record?.COD_UBICAC,
       },
       {
         key: '4',
@@ -130,7 +150,7 @@ const ConsultaSiga = ({ setTitle }) => {
       {
         key: '5',
         label: 'Responsable',
-        children:record?.nombre_completo,
+        children: record?.nombre_completo,
       },
     ];
 
@@ -261,7 +281,7 @@ const ConsultaSiga = ({ setTitle }) => {
           dataSource={bienes?.map((item, index) => ({
             ...item,
             key: item.id || index,
-          }))}          className="custom-header-table"
+          }))} className="custom-header-table"
           expandable={{
             expandedRowRender: (record) =>
               expandedRowRenderPrueba(record),

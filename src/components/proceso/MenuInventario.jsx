@@ -1,6 +1,10 @@
 import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-
+import {
+  EditOutlined,
+  SearchOutlined,
+  QrcodeOutlined, BarcodeOutlined, IdcardOutlined
+} from "@ant-design/icons";
 const MenuInventario = ({ setTitle }) => {
   const navigate = useNavigate();
   useEffect(() => {
@@ -26,9 +30,15 @@ const MenuInventario = ({ setTitle }) => {
             boxShadow: "rgba(0, 0, 0, 0.35) 0px 5px 15px",
             height: "200px",
             width: "200px",
-            backgroundColor: "white"
+            backgroundColor: "white",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center"
+
           }}
-        ></div>
+        >
+          <EditOutlined style={{ fontSize: "80px" }} />
+        </div>
         <p htmlFor="" style={{ marginTop: "10px", fontSize: "15px" }}>
           <strong>Registro de Bienes</strong>
         </p>
@@ -44,11 +54,17 @@ const MenuInventario = ({ setTitle }) => {
             boxShadow: "rgba(0, 0, 0, 0.35) 0px 5px 15px",
             height: "200px",
             width: "200px",
-            backgroundColor: "white"
+            backgroundColor: "white",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center"
+
           }}
-        ></div>
+        >
+          <SearchOutlined style={{ fontSize: "80px" }} />
+
+        </div>
         <p htmlFor="" style={{ marginTop: "10px", fontSize: "15px" }}>
-          {" "}
           <strong>Consulta de Bienes</strong>
         </p>
       </section>
@@ -62,11 +78,15 @@ const MenuInventario = ({ setTitle }) => {
             boxShadow: "rgba(0, 0, 0, 0.35) 0px 5px 15px",
             height: "200px",
             width: "200px",
-            backgroundColor: "white"
+            backgroundColor: "white",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center"
           }}
-        ></div>
+        >
+          <IdcardOutlined style={{ fontSize: "80px" }}/>
+        </div>
         <p htmlFor="" style={{ marginTop: "10px", fontSize: "15px" }}>
-          {" "}
           <strong>Tarjetas de Cargo</strong>
         </p>
       </section>
@@ -80,9 +100,14 @@ const MenuInventario = ({ setTitle }) => {
             boxShadow: "rgba(0, 0, 0, 0.35) 0px 5px 15px",
             height: "200px",
             width: "200px",
-            backgroundColor: "white"
+            backgroundColor: "white",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center"
           }}
-        ></div>
+        >
+          <BarcodeOutlined style={{ fontSize: "80px" }} />
+        </div>
         <p htmlFor="" style={{ marginTop: "10px", fontSize: "15px" }}>
           {" "}
           <strong>Etiqueta para Bienes</strong>
@@ -98,9 +123,15 @@ const MenuInventario = ({ setTitle }) => {
             boxShadow: "rgba(0, 0, 0, 0.35) 0px 5px 15px",
             height: "200px",
             width: "200px",
-            backgroundColor: "white"
+            backgroundColor: "white",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center"
           }}
-        ></div>
+        >
+          <QrcodeOutlined style={{ fontSize: "80px" }} />
+
+        </div>
         <p htmlFor="" style={{ marginTop: "10px", fontSize: "15px" }}>
           {" "}
           <strong>Etiqueta para Ubicaciones</strong>

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Flex, Select, Button, Input, Table } from "antd";
 const Consultas = ({ setTitle }) => {
   useEffect(() => {
-    setTitle("Consultas");
+    setTitle("Consulta Bienes Inventariados");
     getBienes();
     getSedes();
     getUbicaciones();

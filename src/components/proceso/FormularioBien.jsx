@@ -114,14 +114,12 @@ const FormularioBien = ({ data, setBienes }) => {
 
     if (response.ok) {
       notification.success({
-        message: 'Formulario enviado con éxito',
-        description: `Datos guardados correctamente: ${JSON.stringify(data)}`,
+        message: data.msg,
       });
       setBienes(null)
     } else {
       notification.error({
-        message: 'Error al enviar el formulario',
-        description: data.message || 'Error inesperado',
+        message: data.msg,
       });
     }
 
@@ -239,27 +237,27 @@ const FormularioBien = ({ data, setBienes }) => {
               className="form-item-input"
               options={[
                 {
-                  value: "Nuevo",
+                  value: "5",
                   label: "Nuevo",
                 },
                 {
-                  value: "Bueno",
+                  value: "1",
                   label: "Bueno",
                 },
                 {
-                  value: "Regular",
+                  value: "2",
                   label: "Regular",
                 },
                 {
-                  value: "Malo",
+                  value: "3",
                   label: "Malo",
                 },
                 {
-                  value: "RAEE",
+                  value: "7",
                   label: "RAEE",
                 },
                 {
-                  value: "Chatarra",
+                  value: "6",
                   label: "Chatarra",
                 },
               ]}

@@ -46,6 +46,7 @@ const styles = StyleSheet.create({
     },
     tableCell: {
         margin: 5,
+        textAlign:"center"
     },
     footer: {
         position: 'absolute',
@@ -203,17 +204,17 @@ const CargoPDF = ({ registros }) => {
                         {/* Footer - Firmas */}
                         <View style={styles.footer}>
                             <View style={styles.signatureRow}>
-                                <View style={styles.signatureItem}>
-                                    <Text>_______________________________</Text>
-                                    <Text>PRESIDENTE COMISIÓN DE INV 2024</Text>
+                                <View style={{display:"flex", justifyContent:"center", alignItems:"center"}}>
+                                    <Text>__________________________________</Text>
+                                    <Text>Presidente Comisión de Inv 2024</Text>
                                 </View>
-                                <View style={styles.signatureItem}>
-                                    <Text>______________________</Text>
-                                    <Text>V.B CONTROL PATRIMONIAL</Text>
+                                <View style={{display:"flex", justifyContent:"center", alignItems:"center"}}>
+                                    <Text>_________________________</Text>
+                                    <Text>V.B Control Patrimonial</Text>
                                 </View>
-                                <View style={styles.signatureItem}>
-                                    <Text>______________________</Text>
-                                    <Text>USUARIO FINAL</Text>
+                                <View style={{display:"flex", justifyContent:"center", alignItems:"center"}}>
+                                    <Text>__________________</Text>
+                                    <Text>Usuario Final</Text>
                                 </View>
                             </View>
 
@@ -287,7 +288,7 @@ const CargoPDF = ({ registros }) => {
                     <View style={{ width: "100%", marginTop: "20px", height: "50%", }}>
                         {/* Cabecera de la tabla */}
                         <View style={{ width: "100%", display: "flex", flexDirection: "row", borderBottomWidth: "1px", borderTopWidth: "1px", borderLeftWidth: "1px", backgroundColor: "#D3D3D3" }}>
-                            <View style={{ width: "4%", display: "flex", height: "100%", justifyContent: 'center', alignItems: 'center', borderRightWidth: "1px" }}>
+                            <View style={{ width: "25px", display: "flex", height: "100%", justifyContent: 'center', alignItems: 'center', borderRightWidth: "1px" }}>
                                 <Text style={[{ textAlign: "center", width: "100%" }]}>N° DE ORDEN</Text>
                             </View>
                             <View style={{ width: "100%", display: "flex", flexDirection: "column", borderRightWidth: "1px" }}>
@@ -331,8 +332,8 @@ const CargoPDF = ({ registros }) => {
                                     <View style={{ width: "10%", height: "25px", borderRightWidth: "1px", }}>
                                         <Text style={{ textAlign: "center", fontSize: "7px", height: "100%" }}>ESTADO DE CONSERVACIÓN</Text>
                                     </View>
-                                    <View style={{ width: "10%", height: "25px", borderRightWidth: "1px", }}>
-                                        <Text style={{ textAlign: "center", fontSize: "7px", height: "100%", borderRightWidth: "none" }}>OBSERVACIÓN</Text>
+                                    <View style={{ width: "10%", height: "25px",  }}>
+                                        <Text style={{ textAlign: "center", fontSize: "7px", height: "100%", borderWidth:"0" }}>OBSERVACIÓN</Text>
                                     </View>
 
                                 </View>
@@ -341,44 +342,44 @@ const CargoPDF = ({ registros }) => {
 
                         {pagina.map((registro, index) => (
                             <View style={{ width: "100%", display: "flex", flexDirection: "row" }} key={index}>
-                                <View style={{ width: "4%", borderRightWidth: "1px", borderBottomWidth: "1px", borderLeftWidth: "1px" }}>
-                                    <Text style={[styles.tableCell, { textAlign: "center" }]}>{(pageIndex * registrosPorPagina) + index + 1}</Text>
+                                <View style={{ width: "26px", borderRightWidth: "1px", borderBottomWidth: "1px", borderLeftWidth: "1px" }}>
+                                    <Text style={[styles.tableCell]}>{(pageIndex * registrosPorPagina) + index + 1}</Text>
                                 </View>
                                 <View style={{ width: "8%", borderRightWidth: "1px", borderBottomWidth: "1px" }}>
-                                    <Text style={[styles.tableCell, { textAlign: "center" }]}>{registro.sbn}</Text>
+                                    <Text style={[styles.tableCell]}>{registro.sbn}</Text>
                                 </View>
                                 <View style={{ width: "12%", borderRightWidth: "1px", borderBottomWidth: "1px" }}>
-                                    <Text style={[styles.tableCell, { textAlign: "center" }]}>{registro.descripcion}</Text>
+                                    <Text style={[styles.tableCell]}>{registro.descripcion}</Text>
                                 </View>
                                 <View style={{ width: "7%", borderRightWidth: "1px", borderBottomWidth: "1px" }}>
-                                    <Text style={[styles.tableCell, { textAlign: "center" }]}>{registro.marca}</Text>
+                                    <Text style={[styles.tableCell]}>{registro.marca}</Text>
                                 </View>
                                 <View style={{ width: "7%", borderRightWidth: "1px", borderBottomWidth: "1px" }}>
-                                    <Text style={[styles.tableCell, { textAlign: "center" }]}>{registro.modelo}</Text>
+                                    <Text style={[styles.tableCell]}>{registro.modelo}</Text>
+                                </View>
+                                <View style={{ width: "6%",  borderRightWidth: "1px", borderBottomWidth: "1px" }}>
+                                    <Text style={[styles.tableCell]}>{registro.color}</Text>
                                 </View>
                                 <View style={{ width: "6%", borderRightWidth: "1px", borderBottomWidth: "1px" }}>
-                                    <Text style={[styles.tableCell, { textAlign: "center" }]}>{registro.color}</Text>
-                                </View>
-                                <View style={{ width: "6%", borderRightWidth: "1px", borderBottomWidth: "1px" }}>
-                                    <Text style={[styles.tableCell, { textAlign: "center" }]}>{registro.serie}</Text>
+                                    <Text style={[styles.tableCell,{borderWidth:"1px"}]}>{registro.serie}</Text>
                                 </View>
                                 <View style={{ width: "4%", borderRightWidth: "1px", borderBottomWidth: "1px" }}>
-                                    <Text style={[styles.tableCell, { textAlign: "center" }]}>{registro.estado === "Bueno" ? "B" : registro.estado === "Regular" ? "R" : registro.estado === "Malo" ? "M" : registro.estado === "RRAEE" ? "X" : registro.estado === "Chatarra" ? "Y" : registro.estado === "Nuevo" ? "N" : ""}</Text>
+                                    <Text style={[styles.tableCell]}>{registro.estado === "Bueno" ? "B" : registro.estado === "Regular" ? "R" : registro.estado === "Malo" ? "M" : registro.estado === "RRAEE" ? "X" : registro.estado === "Chatarra" ? "Y" : registro.estado === "Nuevo" ? "N" : ""}</Text>
                                 </View>
                                 <View style={{ width: "10%", borderRightWidth: "1px", borderBottomWidth: "1px" }}>
-                                    <Text style={[styles.tableCell, { textAlign: "center" }]}>{registro.marca}</Text>
+                                    <Text style={[styles.tableCell]}>{registro.marca}</Text>
                                 </View>
                                 <View style={{ width: "10%", borderRightWidth: "1px", borderBottomWidth: "1px" }}>
-                                    <Text style={[styles.tableCell, { textAlign: "center" }]}>{registro.modelo}</Text>
+                                    <Text style={[styles.tableCell]}>{registro.modelo}</Text>
                                 </View>
                                 <View style={{ width: "10%", borderRightWidth: "1px", borderBottomWidth: "1px" }}>
-                                    <Text style={[styles.tableCell, { textAlign: "center" }]}>{registro.color}</Text>
+                                    <Text style={[styles.tableCell]}>{registro.color}</Text>
                                 </View>
                                 <View style={{ width: "10%", borderRightWidth: "1px", borderBottomWidth: "1px" }}>
-                                    <Text style={[styles.tableCell, { textAlign: "center" }]}>{registro.serie}</Text>
+                                    <Text style={[styles.tableCell]}>{registro.serie}</Text>
                                 </View>
                                 <View style={{ width: "10%", borderRightWidth: "1px", borderBottomWidth: "1px" }}>
-                                    <Text style={[styles.tableCell, { textAlign: "center" }]}>{registro.estado === "Bueno" ? "B" : registro.estado === "Regular" ? "R" : registro.estado === "Malo" ? "M" : registro.estado === "RRAEE" ? "X" : registro.estado === "Chatarra" ? "Y" : registro.estado === "Nuevo" ? "N" : ""}</Text>
+                                    <Text style={[styles.tableCell]}>{registro.estado === "Bueno" ? "B" : registro.estado === "Regular" ? "R" : registro.estado === "Malo" ? "M" : registro.estado === "RRAEE" ? "X" : registro.estado === "Chatarra" ? "Y" : registro.estado === "Nuevo" ? "N" : ""}</Text>
                                 </View>
                             </View>
                         ))}
@@ -390,20 +391,20 @@ const CargoPDF = ({ registros }) => {
                         <Text style={{ textDecoration: "underline", fontSize: "10px", marginTop: "4px" }}>Consideraciones:</Text>
                         <Text style={{ marginTop: "2px" }}>- El usuario declara haber mostrado todos los bienes muebles que se encuentran bajo su responsabilidad y no contar con más bienes muebles materia de inventario.</Text>
                         <Text>- El usuario es responsable de la permanencia y conservación de cada uno de los bienes muebles descritos, recomendándose tomar las precauciones del caso para evitar sutracciones, deterioros,etc.</Text>
-                        <Text style={{marginBottom:"20px"}}>- Cualquier necesidad de traslado del bien mueble dentro o fuera del local de la Entidad u Organización de Entidad, es preciamente comunicado al encargado de la OCP.</Text>
+                        <Text style={{ marginBottom: "20px" }}>- Cualquier necesidad de traslado del bien mueble dentro o fuera del local de la Entidad u Organización de Entidad, es preciamente comunicado al encargado de la OCP.</Text>
 
 
-                        <View style={{ display: "flex", justifyContent: "space-around", flexDirection: "row", marginTop:"20px" }}>
+                        <View style={{ display: "flex", justifyContent: "space-around", flexDirection: "row", marginTop: "20px" }}>
 
-                            <View >
+                            <View style={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
 
-                                <Text>_________________</Text>
-                                <Text>    Usuario</Text>
+                                <Text>______________</Text>
+                                <Text> Usuario</Text>
 
                             </View>
-                            <View>
+                            <View style={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
 
-                                <Text>_________________________________</Text>
+                                <Text>_____________________________</Text>
                                 <Text>      Personal Inventariador</Text>
 
                             </View>

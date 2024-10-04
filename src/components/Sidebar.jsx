@@ -1,13 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { Flex, Menu } from "antd";
 import {
-  UserOutlined,
-  LaptopOutlined,
   SearchOutlined,
   ApartmentOutlined,
-  ToolOutlined,
   AreaChartOutlined,
-  SolutionOutlined,
+  SettingOutlined,
+  ToolOutlined
   
 } from "@ant-design/icons";
 import "./styles/sidebar.css";
@@ -74,9 +72,9 @@ const Sidebar = () => {
         selectedKeys={[selectedKey]}
         className="menu-bar"
         items={[
-          { key: "/proceso", icon: <UserOutlined />, label: "Procesos" },
+          { key: "/proceso", icon: <SettingOutlined />, label: "Procesos" },
           { key: "/consulta", icon: <SearchOutlined />, label: "Consulta Siga" },
-          { key: "/configuracion", icon: <SolutionOutlined />, label: "Configuración" },
+          { key: "/configuracion", icon: <ToolOutlined />, label: "Configuración" },
           { key: "/mantenimiento", icon: <ApartmentOutlined />, label: "Mantenimiento" },
           // { key: "/mantenimiento", icon: <ToolOutlined />, label: "Mantenimiento" },
           { key: "/sistema", icon: <AreaChartOutlined />, label: "Sistema" },

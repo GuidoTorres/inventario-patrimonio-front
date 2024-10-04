@@ -130,14 +130,38 @@ const EtiquetasBienes = ({ setTitle }) => {
           border: "1px solid lightgrey"
         }}
       >
-        <Input
-          placeholder="Cod. Ubicación"
-          onChange={(e) => setCod(e.target.value)}
+
+        <Select
+          placeholder="Ubicaciones"
+          className="form-item-input"
+          onChange={(e) => setCod(e)}
+          showSearch
+          optionFilterProp="children"
+          filterOption={(input, option) =>
+            (option?.label ?? "").toLowerCase().includes(input.toLowerCase())
+          }
+          allowClear
+          options={
+            ubicaciones.map(item => {
+              return {
+                value: item.tipo_ubicac + "" + item.ubicac_fisica,
+                label: item.nombre
+              }
+
+            })
+          }
+
         />
         <Select
           placeholder="Trabajador"
           className="form-item-input"
           onChange={(e) => setDni(e)}
+          showSearch
+          optionFilterProp="children"
+          filterOption={(input, option) =>
+            (option?.label ?? "").toLowerCase().includes(input.toLowerCase())
+          }
+          allowClear
           options={
             trabajadores.length > 0
               ? trabajadores.map((item) => {

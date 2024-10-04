@@ -1,6 +1,6 @@
 import { Button, Flex, Input, Select, Typography } from 'antd'
 import React, { useEffect, useRef, useState } from 'react'
-import {pdf } from '@react-pdf/renderer';
+import { pdf } from '@react-pdf/renderer';
 
 import CargoPDF from './Pdfs/CargoPDF';
 const TarjetasCargo = ({ setTitle }) => {
@@ -31,6 +31,9 @@ const TarjetasCargo = ({ setTitle }) => {
             setUbicaciones(info); // Guardar los bienes en el estado si la respuesta es exitosa
         }
     };
+
+    console.log(ubicaciones);
+
 
     const getTrabajador = async () => {
         const response = await fetch(
@@ -78,28 +81,52 @@ const TarjetasCargo = ({ setTitle }) => {
     }, [cod]);
     const handlePrint = async () => {
         // Generar el PDF como un blob usando el componente CargoPDF
-        const blob = await pdf(<CargoPDF registros={etiquetas}/>).toBlob();
-    
+        const blob = await pdf(<CargoPDF registros={etiquetas} />).toBlob();
+
         // Crear una URL temporal para el blob
         const url = URL.createObjectURL(blob);
-    
+
         // Abrir una nueva ventana para mostrar el PDF
         window.open(url);
-    
- 
-      };
+
+
+    };
     return (
         <>
             <Flex justify="start" gap={"10px"} style={{ backgroundColor: "white", padding: "15px", borderRadius: "8px" }}>
 
-                <Input
-                    placeholder="Cod. Ubicación"
-                    onChange={(e) => setCod(e.target.value)}
+
+                <Select
+                    placeholder="Ubicaciones"
+                    className="form-item-input"
+                    onChange={(e) => setCod(e)}
+                    showSearch
+                    optionFilterProp="children"
+                    filterOption={(input, option) =>
+                        (option?.label ?? "").toLowerCase().includes(input.toLowerCase())
+                    }
+                    allowClear
+                    options={
+                        ubicaciones.map(item => {
+                            return {
+                                value: item.tipo_ubicac + "" + item.ubicac_fisica,
+                                label: item.nombre
+                            }
+
+                        })
+                    }
+
                 />
                 <Select
                     placeholder="Trabajador"
                     className="form-item-input"
                     onChange={(e) => setDni(e)}
+                    showSearch
+                    optionFilterProp="children"
+                    filterOption={(input, option) =>
+                        (option?.label ?? "").toLowerCase().includes(input.toLowerCase())
+                    }
+                    allowClear
                     options={
                         trabajadores.length > 0
                             ? trabajadores.map((item) => {
@@ -115,7 +142,7 @@ const TarjetasCargo = ({ setTitle }) => {
 
                     <Flex justify='end' align='center'>
 
-                        <Button style={{ backgroundColor: "#4DA362", color: "white" }} onClick={ handlePrint}>Imprimir</Button>
+                        <Button style={{ backgroundColor: "#4DA362", color: "white" }} onClick={handlePrint}>Imprimir</Button>
                     </Flex>
                     : null
                 }

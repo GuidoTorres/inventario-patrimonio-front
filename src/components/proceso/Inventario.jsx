@@ -6,6 +6,7 @@ const { Search } = Input;
 const Inventario = ({ setTitle }) => {
   const [bienes, setBienes] = useState(null);
   const [buscar, setBuscar] = useState("");
+  const [debounceTimeout, setDebounceTimeout] = useState(null);
   useEffect(() => {
     setTitle("Registro de Bienes");
   }, []);
@@ -19,16 +20,15 @@ const Inventario = ({ setTitle }) => {
   }, [buscar]);
 
   const getBienes = async () => {
-    if (buscar !== "") {
+    if (buscar !== "" && buscar.length === 12) {
       const response = await fetch(
         `http://localhost:3006/api/v1/bienes/inventario?sbn=${buscar}`
       );
-
+  
       if (response.ok) {
         const info = await response.json();
         setBienes(info.info); // Guardar los bienes en el estado si la respuesta es exitosa
       } else {
-        // Si el estado es 403 o 404, mostrar un mensaje adecuado
         if (response.status === 403) {
           message.warning("El bien ya ha sido inventariado.");
         } else if (response.status === 404) {
@@ -37,14 +37,27 @@ const Inventario = ({ setTitle }) => {
       }
     }
   };
-
   const limpiarData = async () => {
     setBienes(null);
   };
 
   const handleInputChange = (e) => {
-    setBuscar(e.target.value); // Actualiza el estado de "buscar"
+    const newValue = e.target.value;
+    setBuscar(newValue);
+  
+    // Limpiar el timeout anterior
+    if (debounceTimeout) {
+      clearTimeout(debounceTimeout);
+    }
+  
+    // Crear un nuevo timeout para realizar la búsqueda con retraso
+    const newTimeout = setTimeout(() => {
+      getBienes();
+    }, 5000); // Ajusta el tiempo de debounce (500ms es un buen punto de partida)
+  
+    setDebounceTimeout(newTimeout);
   };
+  
 
   return (
     <>

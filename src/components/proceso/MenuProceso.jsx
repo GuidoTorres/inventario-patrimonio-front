@@ -1,6 +1,9 @@
 import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-
+import {
+  ProfileOutlined,
+  SearchOutlined, BarChartOutlined
+} from "@ant-design/icons";
 const MenuProceso = ({ setTitle }) => {
   const navigate = useNavigate();
   useEffect(() => {
@@ -17,7 +20,7 @@ const MenuProceso = ({ setTitle }) => {
       }}
     >
       <section
-        style={{ height: "250px", cursor: "pointer",}}
+        style={{ height: "250px", cursor: "pointer", }}
         onClick={() => navigate("/proceso/inventario/menu")}
       >
         <div
@@ -26,9 +29,12 @@ const MenuProceso = ({ setTitle }) => {
             boxShadow: "rgba(0, 0, 0, 0.35) 0px 5px 15px",
             height: "200px",
             width: "200px",
-            backgroundColor:"white" 
+            backgroundColor: "white",
+            display: "flex", justifyContent: "center", alignItems: "center"
           }}
-        ></div>
+        ><ProfileOutlined style={{ fontSize: "80px" }} />
+
+        </div>
         <p htmlFor="" style={{ marginTop: "10px", fontSize: "15px" }}>
           <strong>Inventario</strong>
         </p>
@@ -44,9 +50,11 @@ const MenuProceso = ({ setTitle }) => {
             boxShadow: "rgba(0, 0, 0, 0.35) 0px 5px 15px",
             height: "200px",
             width: "200px",
-            backgroundColor:"white" 
+            backgroundColor: "white", display: "flex", justifyContent: "center", alignItems: "center"
           }}
-        ></div>
+        >
+          <SearchOutlined style={{ fontSize: "80px" }} />
+        </div>
         <p htmlFor="" style={{ marginTop: "10px", fontSize: "15px" }}>
           {" "}
           <strong>Consultas</strong>
@@ -62,9 +70,13 @@ const MenuProceso = ({ setTitle }) => {
             boxShadow: "rgba(0, 0, 0, 0.35) 0px 5px 15px",
             height: "200px",
             width: "200px",
-            backgroundColor:"white" 
+            backgroundColor: "white",
+            backgroundColor: "white", display: "flex", justifyContent: "center", alignItems: "center"
+
           }}
-        ></div>
+        >
+          <BarChartOutlined style={{fontSize:"80px"}}/>
+        </div>
         <p htmlFor="" style={{ marginTop: "10px", fontSize: "15px" }}>
           {" "}
           <strong>Reportes</strong>
