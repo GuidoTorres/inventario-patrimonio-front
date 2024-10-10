@@ -1,15 +1,15 @@
 import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import {
-  EditOutlined,
-  QrcodeOutlined,
-  BarcodeOutlined,
-  IdcardOutlined,
+  ProfileOutlined,
+  SearchOutlined,
+  BarChartOutlined,
+  UserOutlined,
 } from "@ant-design/icons";
-const MenuInventario = ({ setTitle }) => {
+const MenuConfiguracion = ({ setTitle }) => {
   const navigate = useNavigate();
   useEffect(() => {
-    setTitle("Menú Inventario");
+    setTitle("Menu Configuración");
   }, []);
   return (
     <div
@@ -23,7 +23,7 @@ const MenuInventario = ({ setTitle }) => {
     >
       <section
         style={{ height: "250px", cursor: "pointer" }}
-        onClick={() => navigate("/inventario/registro")}
+        onClick={() => navigate("/configuracion/usuarios")}
       >
         <div
           style={{
@@ -37,15 +37,15 @@ const MenuInventario = ({ setTitle }) => {
             alignItems: "center",
           }}
         >
-          <EditOutlined style={{ fontSize: "80px" }} />
+          <UserOutlined style={{ fontSize: "80px" }} />
         </div>
         <p htmlFor="" style={{ marginTop: "10px", fontSize: "15px" }}>
-          <strong>Registro de Bienes</strong>
+          <strong>Usuarios</strong>
         </p>
       </section>
       <section
         style={{ height: "250px", cursor: "pointer" }}
-        onClick={() => navigate("/inventario/cargos")}
+        onClick={() => navigate("/configuracion/jefes")}
       >
         <div
           style={{
@@ -54,43 +54,46 @@ const MenuInventario = ({ setTitle }) => {
             height: "200px",
             width: "200px",
             backgroundColor: "white",
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-          }}
-        >
-          <IdcardOutlined style={{ fontSize: "80px" }} />
-        </div>
-        <p htmlFor="" style={{ marginTop: "10px", fontSize: "15px" }}>
-          <strong>Tarjetas de Cargo</strong>
-        </p>
-      </section>
-      <section
-        style={{ height: "250px", cursor: "pointer" }}
-        onClick={() => navigate("/inventario/etiquetas/bienes")}
-      >
-        <div
-          style={{
-            borderRadius: "50%",
-            boxShadow: "rgba(0, 0, 0, 0.35) 0px 5px 15px",
-            height: "200px",
-            width: "200px",
             backgroundColor: "white",
             display: "flex",
             justifyContent: "center",
             alignItems: "center",
           }}
         >
-          <BarcodeOutlined style={{ fontSize: "80px" }} />
+          <BarChartOutlined style={{ fontSize: "80px" }} />
         </div>
         <p htmlFor="" style={{ marginTop: "10px", fontSize: "15px" }}>
           {" "}
-          <strong>Etiqueta para Bienes</strong>
+          <strong>Jefes de Grupo</strong>
         </p>
       </section>
       <section
         style={{ height: "250px", cursor: "pointer" }}
-        onClick={() => navigate("/inventario/etiquetas")}
+        onClick={() => navigate("/configuracion/inventariadores")}
+      >
+        <div
+          style={{
+            borderRadius: "50%",
+            boxShadow: "rgba(0, 0, 0, 0.35) 0px 5px 15px",
+            height: "200px",
+            width: "200px",
+            backgroundColor: "white",
+            backgroundColor: "white",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          <BarChartOutlined style={{ fontSize: "80px" }} />
+        </div>
+        <p htmlFor="" style={{ marginTop: "10px", fontSize: "15px" }}>
+          {" "}
+          <strong>Inventariadores</strong>
+        </p>
+      </section>
+      <section
+        style={{ height: "250px", cursor: "pointer" }}
+        onClick={() => navigate("/configuracion/ubicaciones")}
       >
         <div
           style={{
@@ -104,15 +107,15 @@ const MenuInventario = ({ setTitle }) => {
             alignItems: "center",
           }}
         >
-          <QrcodeOutlined style={{ fontSize: "80px" }} />
+          <SearchOutlined style={{ fontSize: "80px" }} />
         </div>
         <p htmlFor="" style={{ marginTop: "10px", fontSize: "15px" }}>
           {" "}
-          <strong>Etiqueta para Ubicaciones</strong>
+          <strong>Ubicaciones</strong>
         </p>
       </section>
     </div>
   );
 };
 
-export default MenuInventario;
+export default MenuConfiguracion;

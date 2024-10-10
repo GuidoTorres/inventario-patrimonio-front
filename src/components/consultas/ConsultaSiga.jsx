@@ -78,7 +78,7 @@ const ConsultaSiga = ({ setTitle }) => {
   ];
 
   const getSedes = async () => {
-    const response = await fetch(`http://localhost:3006/api/v1/sedes`);
+    const response = await fetch(`${process.env.REACT_APP_BASE}/sedes`);
 
     if (response.ok) {
       const info = await response.json();
@@ -86,7 +86,7 @@ const ConsultaSiga = ({ setTitle }) => {
     }
   };
   const getUbicaciones = async () => {
-    const response = await fetch(`http://localhost:3006/api/v1/ubicaciones`);
+    const response = await fetch(`${process.env.REACT_APP_BASE}/ubicaciones`);
 
     if (response.ok) {
       const info = await response.json();
@@ -158,6 +158,7 @@ const ConsultaSiga = ({ setTitle }) => {
       <Descriptions title="Información Adicional" items={items} />
     );
   };
+  console.log(ubicaciones);
 
   return (
     <>
@@ -183,6 +184,12 @@ const ConsultaSiga = ({ setTitle }) => {
               width: "33%",
             }}
             value={selectedSede || undefined}
+            showSearch
+            optionFilterProp="children"
+            filterOption={(input, option) =>
+              (option?.label ?? "").toLowerCase().includes(input.toLowerCase())
+            }
+            allowClear
             options={sedes.map((item) => {
               return {
                 label: item.nombre,
@@ -197,10 +204,16 @@ const ConsultaSiga = ({ setTitle }) => {
             style={{
               width: "33%",
             }}
+            showSearch
+            optionFilterProp="children"
+            filterOption={(input, option) =>
+              (option?.label ?? "").toLowerCase().includes(input.toLowerCase())
+            }
+            allowClear
             options={ubicaciones.map((item) => {
               return {
                 label: item.nombre,
-                value: item.id,
+                value: item.tipo_ubicac +""+item.ubicac_fisica,
               };
             })}
             onChange={setSelectedUbicacion}
@@ -210,6 +223,7 @@ const ConsultaSiga = ({ setTitle }) => {
             style={{
               width: "33%",
             }}
+            allowClear
             value={usuario || undefined}
             onChange={(e) => setUsuario(e.target.value)}
           />
@@ -230,6 +244,7 @@ const ConsultaSiga = ({ setTitle }) => {
               style={{
                 width: "50%",
               }}
+              allowClear
               onChange={(e) => setCodigoSBN(e.target.value)}
               value={codigoSBN || undefined}
             />
@@ -238,6 +253,7 @@ const ConsultaSiga = ({ setTitle }) => {
               style={{
                 width: "50%",
               }}
+              allowClear
               onChange={(e) => setSerie(e.target.value)}
               value={serie || undefined}
             />

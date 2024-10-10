@@ -2,6 +2,7 @@
   "name": "front-patrimonio",
   "version": "0.1.0",
   "private": true,
+  "main": "main.js",
   "dependencies": {
     "@react-pdf/renderer": "^4.0.0",
     "@testing-library/jest-dom": "^5.17.0",
@@ -11,6 +12,8 @@
     "ajv-keywords": "^5.1.0",
     "antd": "^5.20.6",
     "dayjs": "^1.11.13",
+    "electron-store": "^10.0.0",
+    "is-online": "^11.0.0",
     "react": "^18.3.1",
     "react-barcode": "^1.5.3",
     "react-dom": "^18.3.1",
@@ -18,13 +21,16 @@
     "react-router-dom": "^6.26.2",
     "react-scripts": "5.0.1",
     "react-to-print": "^2.15.1",
+    "socket.io-client": "^4.8.0",
     "web-vitals": "^2.1.4"
   },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "electron": "electron .",
+    "dist": "electron-builder"
   },
   "eslintConfig": {
     "extends": [
@@ -43,5 +49,31 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "electron": "^32.1.2",
+    "electron-builder": "^25.1.7"
+  },
+  "build": {
+    "appId": "com.miapp.react",
+    "productName": "MiAppReact",
+    "directories": {
+      "buildResources": "assets"
+    },
+    "files": [
+      "server/**", 
+      "main.js",
+      "index.html",
+      "node_modules/**"
+    ],
+    "win": {
+      "target": "nsis"
+    },
+    "mac": {
+      "target": "dmg"
+    },
+    "linux": {
+      "target": "AppImage"
+    }
   }
 }

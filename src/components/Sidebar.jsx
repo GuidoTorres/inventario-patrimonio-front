@@ -72,12 +72,11 @@ const Sidebar = () => {
         selectedKeys={[selectedKey]}
         className="menu-bar"
         items={[
-          { key: "/proceso", icon: <SettingOutlined />, label: "Procesos" },
-          { key: "/consulta", icon: <SearchOutlined />, label: "Consulta Siga" },
+          { key: "/inventario", icon: <SettingOutlined />, label: "Inventario" },
+          { key: "/consulta", icon: <SearchOutlined />, label: "Consultas" },
           { key: "/configuracion", icon: <ToolOutlined />, label: "Configuración" },
-          { key: "/mantenimiento", icon: <ApartmentOutlined />, label: "Mantenimiento" },
-          // { key: "/mantenimiento", icon: <ToolOutlined />, label: "Mantenimiento" },
-          { key: "/sistema", icon: <AreaChartOutlined />, label: "Sistema" },
+          { key: "/reportes", icon: <AreaChartOutlined />, label: "Reportes" },
+          // { key: "/sistema", icon: <AreaChartOutlined />, label: "Sistema" },
         ]}
         onClick={handleMenuClick}
       />

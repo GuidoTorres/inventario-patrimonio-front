@@ -29,7 +29,7 @@ const EtiquetasUbicaciones = () => {
     const getSedes = async () => {
 
         const response = await fetch(
-            `http://localhost:3006/api/v1/sedes`
+            `${process.env.REACT_APP_BASE}/sedes`
         );
 
         if (response.ok) {
@@ -41,7 +41,7 @@ const EtiquetasUbicaciones = () => {
     const getDependencias = async () => {
 
         const response = await fetch(
-            `http://localhost:3006/api/v1/dependencias`
+            `${process.env.REACT_APP_BASE}/dependencias`
         );
 
         if (response.ok) {
@@ -53,7 +53,7 @@ const EtiquetasUbicaciones = () => {
     const getUbicaciones = async () => {
 
         const response = await fetch(
-            `http://localhost:3006/api/v1/ubicaciones`
+            `${process.env.REACT_APP_BASE}/ubicaciones`
         );
 
         if (response.ok) {
@@ -108,6 +108,12 @@ const EtiquetasUbicaciones = () => {
                 <Select
                     placeholder="Sedes"
                     style={{ width: "350px" }}
+                    showSearch
+                    optionFilterProp="children"
+                    filterOption={(input, option) =>
+                      (option?.label ?? "").toLowerCase().includes(input.toLowerCase())
+                    }
+                    allowClear
                     options={sedes.map(item => {
                         return {
                             label: item.nombre,
@@ -126,6 +132,12 @@ const EtiquetasUbicaciones = () => {
                             value: item.id
                         }
                     })}
+                    showSearch
+                    optionFilterProp="children"
+                    filterOption={(input, option) =>
+                      (option?.label ?? "").toLowerCase().includes(input.toLowerCase())
+                    }
+                    allowClear
                     onChange={(e) => setFormValues(value => ({ ...value, dependencia: e }))}
 
                 />

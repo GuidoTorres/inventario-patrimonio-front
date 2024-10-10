@@ -15,7 +15,7 @@ const Consultas = ({ setTitle }) => {
 
   const getBienes = async () => {
     const response = await fetch(
-      `http://localhost:3006/api/v1/bienes/inventariados`
+      `${process.env.REACT_APP_BASE}/bienes/inventariados`
     );
 
     if (response.ok) {
@@ -25,7 +25,7 @@ const Consultas = ({ setTitle }) => {
   };
 
   const getSedes = async () => {
-    const response = await fetch(`http://localhost:3006/api/v1/sedes`);
+    const response = await fetch(`${process.env.REACT_APP_BASE}/sedes`);
 
     if (response.ok) {
       const info = await response.json();
@@ -33,7 +33,7 @@ const Consultas = ({ setTitle }) => {
     }
   };
   const getUbicaciones = async () => {
-    const response = await fetch(`http://localhost:3006/api/v1/ubicaciones`);
+    const response = await fetch(`${process.env.REACT_APP_BASE}/ubicaciones`);
 
     if (response.ok) {
       const info = await response.json();
@@ -101,7 +101,7 @@ const Consultas = ({ setTitle }) => {
   // Enviar la consulta a la API
   const handleSearch = async () => {
     const queryParams = buildQueryParams();
-    const url = `http://localhost:3006/api/v1/bienes/consulta?${queryParams}`;
+    const url = `${process.env.REACT_APP_BASE}/bienes/consulta?${queryParams}`;
 
     try {
       const response = await fetch(url);
@@ -131,6 +131,12 @@ const Consultas = ({ setTitle }) => {
             }}
             name="sede_id"
             value={filters.sede_id}
+            showSearch
+            optionFilterProp="children"
+            filterOption={(input, option) =>
+              (option?.label ?? "").toLowerCase().includes(input.toLowerCase())
+            }
+            allowClear
             onChange={(e) => handleInputChange("sede_id", e)}
             options={sedes.map((item) => {
               return {
@@ -150,6 +156,12 @@ const Consultas = ({ setTitle }) => {
                 value: item.id,
               };
             })}
+            showSearch
+            optionFilterProp="children"
+            filterOption={(input, option) =>
+              (option?.label ?? "").toLowerCase().includes(input.toLowerCase())
+            }
+            allowClear
             name="ubicacion_id"
             value={filters.ubicacion_id}
             onChange={(e) => handleInputChange("ubicacion_id", e)}
@@ -159,6 +171,12 @@ const Consultas = ({ setTitle }) => {
             style={{
               width: "33%",
             }}
+            showSearch
+            optionFilterProp="children"
+            filterOption={(input, option) =>
+              (option?.label ?? "").toLowerCase().includes(input.toLowerCase())
+            }
+            allowClear
             options={ubicaciones.map((item) => {
               return {
                 label: item.nombre,

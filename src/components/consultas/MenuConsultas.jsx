@@ -1,17 +1,18 @@
 import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import {
-  EditOutlined,
-  QrcodeOutlined,
-  BarcodeOutlined,
-  IdcardOutlined,
+  ProfileOutlined,
+  SearchOutlined,
+  BarChartOutlined,
 } from "@ant-design/icons";
-const MenuInventario = ({ setTitle }) => {
+
+const MenuConsultas = ({ setTitle }) => {
   const navigate = useNavigate();
   useEffect(() => {
-    setTitle("Menú Inventario");
+    setTitle("Menu Consultas");
   }, []);
   return (
+    
     <div
       style={{
         display: "flex",
@@ -23,7 +24,7 @@ const MenuInventario = ({ setTitle }) => {
     >
       <section
         style={{ height: "250px", cursor: "pointer" }}
-        onClick={() => navigate("/inventario/registro")}
+        onClick={() => navigate("/consulta/siga")}
       >
         <div
           style={{
@@ -37,15 +38,16 @@ const MenuInventario = ({ setTitle }) => {
             alignItems: "center",
           }}
         >
-          <EditOutlined style={{ fontSize: "80px" }} />
+          <ProfileOutlined style={{ fontSize: "80px" }} />
         </div>
         <p htmlFor="" style={{ marginTop: "10px", fontSize: "15px" }}>
-          <strong>Registro de Bienes</strong>
+          <strong>Consulta Siga</strong>
         </p>
       </section>
+
       <section
         style={{ height: "250px", cursor: "pointer" }}
-        onClick={() => navigate("/inventario/cargos")}
+        onClick={() => navigate("/consulta/inventariados")}
       >
         <div
           style={{
@@ -59,38 +61,16 @@ const MenuInventario = ({ setTitle }) => {
             alignItems: "center",
           }}
         >
-          <IdcardOutlined style={{ fontSize: "80px" }} />
-        </div>
-        <p htmlFor="" style={{ marginTop: "10px", fontSize: "15px" }}>
-          <strong>Tarjetas de Cargo</strong>
-        </p>
-      </section>
-      <section
-        style={{ height: "250px", cursor: "pointer" }}
-        onClick={() => navigate("/inventario/etiquetas/bienes")}
-      >
-        <div
-          style={{
-            borderRadius: "50%",
-            boxShadow: "rgba(0, 0, 0, 0.35) 0px 5px 15px",
-            height: "200px",
-            width: "200px",
-            backgroundColor: "white",
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-          }}
-        >
-          <BarcodeOutlined style={{ fontSize: "80px" }} />
+          <SearchOutlined style={{ fontSize: "80px" }} />
         </div>
         <p htmlFor="" style={{ marginTop: "10px", fontSize: "15px" }}>
           {" "}
-          <strong>Etiqueta para Bienes</strong>
+          <strong>Inventariados</strong>
         </p>
       </section>
       <section
         style={{ height: "250px", cursor: "pointer" }}
-        onClick={() => navigate("/inventario/etiquetas")}
+        onClick={() => navigate("/consulta/faltantes")}
       >
         <div
           style={{
@@ -99,20 +79,21 @@ const MenuInventario = ({ setTitle }) => {
             height: "200px",
             width: "200px",
             backgroundColor: "white",
+            backgroundColor: "white",
             display: "flex",
             justifyContent: "center",
             alignItems: "center",
           }}
         >
-          <QrcodeOutlined style={{ fontSize: "80px" }} />
+          <BarChartOutlined style={{ fontSize: "80px" }} />
         </div>
         <p htmlFor="" style={{ marginTop: "10px", fontSize: "15px" }}>
           {" "}
-          <strong>Etiqueta para Ubicaciones</strong>
+          <strong>Faltantes</strong>
         </p>
       </section>
     </div>
   );
 };
 
-export default MenuInventario;
+export default MenuConsultas;

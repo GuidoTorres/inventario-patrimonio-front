@@ -18,13 +18,22 @@ const EtiquetasBienes = ({ setTitle }) => {
   const [cod, setCod] = useState("");
   const [dni, setDni] = useState("");
   const [sbn, setSbn] = useState("");
+  const [sedes, setSedes] = useState([]);
+  const [data, setData] = useState([])
+  const [dependencias, setDependencias] = useState([]);
+  const [selectedSede, setSelectedSede] = useState(null);
+  const [selectedDependencia, setSelectedDependencia] = useState(null);
 
   useEffect(() => {
     getUbicaciones();
   }, []);
 
+  useEffect(() => {
+    setSedes(data.map(item => item.sede)); // Extraer las sedes del data
+  }, [data]);
+
   const getUbicaciones = async () => {
-    const response = await fetch(`http://localhost:3006/api/v1/ubicaciones`);
+    const response = await fetch(`${process.env.REACT_APP_BASE}/ubicaciones`);
 
     if (response.ok) {
       const info = await response.json();
@@ -34,7 +43,7 @@ const EtiquetasBienes = ({ setTitle }) => {
 
   const getTrabajador = async () => {
     const response = await fetch(
-      `http://localhost:3006/api/v1/bienes/trabajadores?cod=${cod}`
+      `${process.env.REACT_APP_BASE}/trabajadores/all`
     );
 
     if (response.ok) {
@@ -45,8 +54,52 @@ const EtiquetasBienes = ({ setTitle }) => {
     }
   };
 
+  // Función para manejar el cambio de trabajador
+  const handleTrabajadorChange = async () => {
+    // Hacer una solicitud para obtener las sedes, dependencias y ubicaciones según el trabajador seleccionado
+    try {
+      const response = await fetch(
+        `${process.env.REACT_APP_BASE}/bienes/trabajadores/sedes?dni=${dni}`
+      );
+      const data = await response.json();
+      setData(data);
+    } catch (error) {
+      console.error("Error al obtener datos relacionados:", error);
+    }
+  };
+
+  const handleSedeChange = (sedeId) => {
+    setSelectedSede(sedeId);
+
+    // Filtrar dependencias por la sede seleccionada
+    const filteredDependencias = data
+      .filter((item) => item.sede.id === sedeId)
+      .map((item) => item.dependencia);
+
+    setDependencias(filteredDependencias);
+    setUbicaciones([]); // Limpiar ubicaciones al cambiar de sede
+    setSelectedDependencia(null); // Limpiar selección de dependencia
+  };
+
+  const handleDependenciaChange = (dependenciaId) => {
+    setSelectedDependencia(dependenciaId);
+
+    // Filtrar ubicaciones por la dependencia seleccionada
+    const filteredUbicaciones = sedes
+      .filter((item) => item.dependencia.id === dependenciaId)
+      .map((item) => item.ubicacione);
+
+    setUbicaciones(filteredUbicaciones);
+  };
+
+  useEffect(() => {
+    if (dni?.length === 8) {
+      handleTrabajadorChange();
+    }
+  }, [dni]);
+
   const getEtiquetas = async () => {
-    let url = `http://localhost:3006/api/v1/bienes/etiquetas?`; // URL base
+    let url = `${process.env.REACT_APP_BASE}/bienes/etiquetas?`; // URL base
 
     // Agregar parámetros opcionales a la URL
     if (cod) {
@@ -72,10 +125,9 @@ const EtiquetasBienes = ({ setTitle }) => {
     }
   };
 
-
-  useEffect(() => {
-    getEtiquetas();
-  }, [dni, sbn]);
+  // useEffect(() => {
+  //   getEtiquetas();
+  // }, [dni]);
 
   useEffect(() => {
     getTrabajador();
@@ -94,7 +146,7 @@ const EtiquetasBienes = ({ setTitle }) => {
       setPrintTrigger(false);
     }
   }, [printTrigger]);
-
+  console.log(sedes);
   return (
     <>
       <style>
@@ -127,9 +179,61 @@ const EtiquetasBienes = ({ setTitle }) => {
           backgroundColor: "white",
           padding: "15px",
           borderRadius: "8px",
-          border: "1px solid lightgrey"
+          border: "1px solid lightgrey",
         }}
       >
+        <Select
+          placeholder="Trabajador"
+          className="form-item-input"
+          onChange={(e) => setDni(e)}
+          showSearch
+          optionFilterProp="children"
+          filterOption={(input, option) =>
+            (option?.label ?? "").toLowerCase().includes(input.toLowerCase())
+          }
+          allowClear
+          options={trabajadores?.map((item) => {
+            return { label: item.nombre, value: item.dni };
+          })}
+        />
+        <Select
+          placeholder="Sedes"
+          className="form-item-input"
+          onChange={handleSedeChange}
+          showSearch
+          optionFilterProp="children"
+          filterOption={(input, option) =>
+            (option?.label ?? "").toLowerCase().includes(input.toLowerCase())
+          }
+          allowClear
+          options={sedes?.map((item) => {
+            return {
+              value: item?.sede?.id,
+              label: item?.sede?.nombre,
+            };
+          })}
+        />
+        <Select
+          placeholder="Dependencias"
+          className="form-item-input"
+          onChange={handleDependenciaChange}
+          value={selectedDependencia}
+          showSearch
+          optionFilterProp="children"
+          filterOption={(input, option) =>
+            (option?.label ?? "").toLowerCase().includes(input.toLowerCase())
+          }
+          allowClear
+          options={sedes?.map((item) => {
+            return {
+              value:
+                item?.dependencia?.tipo_ubicac +
+                "" +
+                item?.dependencia?.ubicac_fisica,
+              label: item?.dependencia?.nombre,
+            };
+          })}
+        />
 
         <Select
           placeholder="Ubicaciones"
@@ -141,65 +245,54 @@ const EtiquetasBienes = ({ setTitle }) => {
             (option?.label ?? "").toLowerCase().includes(input.toLowerCase())
           }
           allowClear
-          options={
-            ubicaciones.map(item => {
-              return {
-                value: item.tipo_ubicac + "" + item.ubicac_fisica,
-                label: item.nombre
-              }
-
-            })
-          }
-
-        />
-        <Select
-          placeholder="Trabajador"
-          className="form-item-input"
-          onChange={(e) => setDni(e)}
-          showSearch
-          optionFilterProp="children"
-          filterOption={(input, option) =>
-            (option?.label ?? "").toLowerCase().includes(input.toLowerCase())
-          }
-          allowClear
-          options={
-            trabajadores.length > 0
-              ? trabajadores.map((item) => {
-                return { label: item.nombre, value: item.dni };
-              })
-              : []
-          }
-
+          options={sedes?.map((item) => {
+            return {
+              value:
+                item?.ubicacione?.tipo_ubicac +
+                "" +
+                item?.ubicacione?.ubicac_fisica,
+              label: item?.ubicacione?.nombre,
+            };
+          })}
         />
 
-        <Input
+        {/* <Input
           placeholder="SBN"
           onChange={(e) => setSbn(e.target.value)}
+          allowClear
 
-        />
-        <Button style={{ backgroundColor: "#4DA362", color: "white" }} onClick={() => handleBarcodePrint()}>Limpiar Filtros</Button>
-        {etiquetas.length > 0 ?
-
-
-          <Flex justify='end' align='center'>
-
-            <Button style={{ backgroundColor: "#4DA362", color: "white" }} onClick={() => handleBarcodePrint()}>Imprimir Etiquetas</Button>
+        /> */}
+        <Button
+          style={{ backgroundColor: "#4DA362", color: "white" }}
+          onClick={() => handleBarcodePrint()}
+        >
+          Limpiar Filtros
+        </Button>
+        {etiquetas.length > 0 ? (
+          <Flex justify="end" align="center">
+            <Button
+              style={{ backgroundColor: "#4DA362", color: "white" }}
+              onClick={() => handleBarcodePrint()}
+            >
+              Imprimir Etiquetas
+            </Button>
           </Flex>
-          : null
-        }
+        ) : null}
       </Flex>
-      <div style={{
-        height: "90%", border: "1px solid lightgrey"
-        , marginTop: "10px", borderRadius: "8px", padding: "1px", backgroundColor: "white"
-      }}>
-
+      <div
+        style={{
+          height: "90%",
+          border: "1px solid lightgrey",
+          marginTop: "10px",
+          borderRadius: "8px",
+          padding: "1px",
+          backgroundColor: "white",
+        }}
+      >
         <div ref={barcodeRef}>
           <CodigoBarras values={etiquetas} className="etiqueta" />
         </div>
-
       </div>
-
-
     </>
   );
 };

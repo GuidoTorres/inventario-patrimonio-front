@@ -24,7 +24,7 @@ const TarjetasCargo = ({ setTitle }) => {
     }, []);
 
     const getUbicaciones = async () => {
-        const response = await fetch(`http://localhost:3006/api/v1/ubicaciones`);
+        const response = await fetch(`${process.env.REACT_APP_BASE}/ubicaciones`);
 
         if (response.ok) {
             const info = await response.json();
@@ -37,7 +37,7 @@ const TarjetasCargo = ({ setTitle }) => {
 
     const getTrabajador = async () => {
         const response = await fetch(
-            `http://localhost:3006/api/v1/bienes/trabajadores?cod=${cod}`
+            `${process.env.REACT_APP_BASE}/bienes/trabajadores?cod=${cod}`
         );
 
         if (response.ok) {
@@ -49,7 +49,7 @@ const TarjetasCargo = ({ setTitle }) => {
     };
 
     const getEtiquetas = async () => {
-        let url = `http://localhost:3006/api/v1/bienes/etiquetas?`; // URL base
+        let url = `${process.env.REACT_APP_BASE}/bienes/etiquetas?`; // URL base
 
         // Agregar parámetros opcionales a la URL
         if (cod) {
